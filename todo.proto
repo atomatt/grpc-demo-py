@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package todo;
+
+// Task represents a todo item.
+message Task {
+  // Task's unique id.
+  string id = 1;
+  // Description of the task.
+  string description = 2;
+  // Completion status.
+  bool completed = 3;
+}
+
+message Empty {}
+
+message ListResponse {
+  repeated Task tasks = 1;
+}
+
+message AddRequest {
+  string description = 1;
+}
+
+message AddResponse {
+  Task task = 1;
+}
+
+message CompleteRequest {
+  string task = 1;
+  bool completed = 2;
+}
+
+message CompleteResponse {
+  Task task = 1;
+}
+
+// Todo is a service for accessing todo tasks.
+service Todo {
+  // List all tasks.
+  rpc List(Empty) returns (ListResponse) {}
+
+  // Add a new task to the todo list.
+  rpc Add(AddRequest) returns (AddResponse) {}
+
+  // Update a task's completed status.
+  rpc Complete(CompleteRequest) returns (CompleteResponse) {}
+}
